@@ -27,22 +27,44 @@ describe('EJEMPLOS PRACTICOS DE PRUEBAS DE INTEGRACION', () => {
   test('TODO: POST /api/tareas crea una tarea', async () => {
     // PISTA:
     // 1. Define el objeto `nuevaTarea` con el `title`.
+    const newTask = {
+        title: 'Tarea de prueba'
+    };
     // 2. Haz una petición `POST` usando `supertest`.
+    const res = await request(app)
+    .post('/api/tareas')
+    .send(newTask);
     // 3. Verifica el `statusCode` de la respuesta (debe ser 201).
+    expect(res.statusCode).toBe(201);
     // 4. Asegúrate de que el cuerpo de la respuesta contenga el título y un `_id`.
-    
-    expect(true).toBe(true); // Placeholder - ¡reemplazar!
+    expect(res.body._id).toBeDefined();
+    expect(res.body.title).toBe(newTask.title);
+    expect(res.body.title).toBe('Tarea de prueba');
+
+    const tareaInDB = await Tarea.find();
+    console.log("👨🏻‍💻 Revisión de datos creados en la prueba",tareaInDB);
   });
 
   // EJERCICIO 2: Implementar la prueba para obtener todas las tareas
   test('TODO: GET /api/tareas devuelve todas las tareas', async () => {
     // PISTA:
     // 1. Crea varias tareas directamente en la base de datos usando `Tarea.create()`.
-    // 2. Haz una petición `GET` a la API.
-    // 3. Verifica el `statusCode` (200) y que el array devuelto tenga la longitud correcta.
-    // 4. Asegúrate de que los títulos de las tareas en la respuesta coincidan con los que creaste.
+    await Tarea.create({ title: 'Tarea 1'});
+    await Tarea.create({ title: 'Tarea finalizada', completed: true });
     
-    expect(true).toBe(true); // Placeholder - ¡reemplazar!
+    // 2. Haz una petición `GET` a la API.
+    const res = await request(app)
+    .get('/api/tareas');
+    // 3. Verifica el `statusCode` (200) y que el array devuelto tenga la longitud correcta.
+    expect(res.statusCode).toBe(200);
+    expect(res.body.length).toBe(2);
+    expect(res.body).toHaveLength(2);
+    // 4. Asegúrate de que los títulos de las tareas en la respuesta coincidan con los que creaste.
+    expect(res.body[0].title).toBe('Tarea 1');
+    expect(res.body[1].title).toBe('Tarea finalizada');
+
+    const TareaInDB = await Tarea.find();
+    console.log("👨🏻‍💻 GET - Revisión de datos en la BD antes de la prueba",TareaInDB);
   });
 
   // EJERCICIO 3: Implementar la prueba para obtener una tarea específica
