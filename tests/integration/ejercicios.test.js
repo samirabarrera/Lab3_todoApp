@@ -29,14 +29,13 @@ describe('🎓 EJERCICIOS PARA ESTUDIANTES', () => {
     // 1. Crear una tarea
     // 2. Hacer PUT con datos actualizados
     // 3. Verificar respuesta y BD
-    
-    // const tarea = await Tarea.create({ title: 'Tarea original' });
-    // const res = await request(app)
-    //   .put(`/api/tareas/${tarea._id}`)
-    //   .send({ title: 'Tarea actualizada', completed: true });
+  const tarea = await Tarea.create({ title: 'Tarea original' });
+  const res = await request(app)
+   .put(`/api/tareas/${tarea._id}`)
+  .send({ title: 'Tarea actualizada', completed: true });
     
     // TODO: Agregar expects aquí
-    expect(true).toBe(true); // Placeholder - ¡reemplazar!
+  expect(true).toBe(true); // Placeholder - ¡reemplazar!
   });
 
   // EJERCICIO 2: Completar esta prueba
@@ -45,7 +44,10 @@ describe('🎓 EJERCICIOS PARA ESTUDIANTES', () => {
     // 1. Crear una tarea
     // 2. Hacer DELETE
     // 3. Verificar que se eliminó (404 en GET)
-    
+  /*const borrarTarea = await borrarTarea.delete({ title: 'Borrar Tarea'});
+  const res = await request(app)
+  .delete(`api/tareas/${tarea._id}`)
+  .send({ title: 'Tarea borrada', completed: true });*/
     expect(true).toBe(true); // Placeholder - ¡reemplazar!
   });
 
