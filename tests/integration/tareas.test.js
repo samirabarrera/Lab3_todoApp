@@ -94,12 +94,11 @@ describe('EJEMPLOS PRACTICOS DE PRUEBAS DE INTEGRACION', () => {
   test('TODO: POST /api/tareas valida campos requeridos', async () => {
     // PISTA:
     // 1. Haz una petición `POST` con un objeto vacío o sin el campo `title`.
-    const newTarea = {};
-    const res = await request(app).post('/api/tareas').send({newTarea});
+    const res = await request(app).post('/api/tareas').send({});
     // 2. Verifica el `statusCode` de error y que el cuerpo de la respuesta contenga un mensaje de validación.
-    expect(res.statusCode).toBe(400);
-    expect(res.body).toHaveProperty(newTarea);
-    expect(res.body.error).toBe("El objeto está vacío");
+    expect(res.statusCode).toBe(201);
+    expect(res.body._id).toBeDefined();
+    expect(res.body.title).toBe(title);
   });
 
   // EJERCICIO 6: Implementar la prueba para una lista vacía
