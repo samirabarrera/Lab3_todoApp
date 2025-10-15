@@ -67,16 +67,14 @@ describe('EJEMPLOS PRACTICOS DE PRUEBAS DE INTEGRACION', () => {
   });
 
   // EJERCICIO 3: Implementar la prueba para obtener una tarea específica
-  test('TODO: GET /api/tareas/:id devuelve una tarea específica', async () => {
-    // PISTA:
-    // 1. Crea una tarea en la base de datos para obtener su `_id`.
-    const Tarea = await Tarea.create({title: 'Tarea test uno'});
-    // 2. Haz una petición `GET` a la ruta dinámica `/api/tareas/:id`.
-    const res = await request(app).get(`/api/tareas/${Tarea._id}`);
-    // 3. Verifica el `statusCode` (200) y que el `title` de la respuesta coincida con el de la tarea que creaste.
+  test('GET /api/tareas/:id devuelve una tarea específica', async () => {
+    const tarea = await Tarea.create({ title: 'Tarea específica' });
+    
+    const res = await request(app).get(`/api/tareas/${tarea._id}`);
+    
     expect(res.statusCode).toBe(200);
-    expect(res.body.title).toBe('Tarea test uno');
-    expect(res.body._id).toBe(Tarea._id.toString ());
+    expect(res.body.title).toBe('Tarea específica');
+    expect(res.body.completed).toBe(false);
   });
 
   // ✅ EJERCICIO 4: Implementar la prueba para un ID inexistente
@@ -96,9 +94,8 @@ describe('EJEMPLOS PRACTICOS DE PRUEBAS DE INTEGRACION', () => {
     // 1. Haz una petición `POST` con un objeto vacío o sin el campo `title`.
     const res = await request(app).post('/api/tareas').send({});
     // 2. Verifica el `statusCode` de error y que el cuerpo de la respuesta contenga un mensaje de validación.
-    expect(res.statusCode).toBe(201);
-    expect(res.body._id).toBeDefined();
-    expect(res.body.title).toBe(title);
+    expect(res.statusCode).toBe(500);
+    expect(res.body._id).toBeUndefined();
   });
 
   // EJERCICIO 6: Implementar la prueba para una lista vacía
