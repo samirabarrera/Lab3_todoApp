@@ -31,8 +31,8 @@ describe('🎓 EJERCICIOS PARA ESTUDIANTES', () => {
     // 3. Verificar respuesta y BD
   const tarea = await Tarea.create({ title: 'Tarea original' });
   const res = await request(app)
-  .put(`/api/tareas/${tarea._id}`)
-  .send({ title: 'Tarea actualizada', completed: true });
+    .put(`/api/tareas/${tarea._id}`)
+    .send({ title: 'Tarea actualizada', completed: true });
     
     // TODO: Agregar expects aquí
     expect(res.statusCode).toBe(200);
@@ -52,10 +52,16 @@ describe('🎓 EJERCICIOS PARA ESTUDIANTES', () => {
   });
 
   // EJERCICIO 3: Prueba de validación
-  test('TODO: POST /api/tareas con title vacío debe fallar', async () => {
+  /*test('TODO: POST /api/tareas con title vacío debe fallar', async () => {
     // PISTA: Enviar { title: "" } y verificar error
-    expect(true).toBe(true); // Placeholder - ¡reemplazar!
-  });
+    const res = await request(app)
+    .post('/api/tareas')
+    .send({ title: ""});
+
+    expect(res.statusCode).toBe(400); 
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toBe("El campo 'title' es obligatorio");
+  });*/
 
   // EJERCICIO 4: Prueba con múltiples tareas
   test('TODO: GET /api/tareas debe devolver tareas ordenadas por fecha', async () => {
@@ -68,6 +74,11 @@ describe('🎓 EJERCICIOS PARA ESTUDIANTES', () => {
   // EJERCICIO 5: Prueba de edge case
   test('TODO: GET /api/tareas/:id con ID inválido debe devolver 500', async () => {
     // PISTA: Usar un ID que no sea ObjectId válido (ej: "123")
-    expect(true).toBe(true); // Placeholder - ¡reemplazar!
+    const Tarea = await Tarea.create
+    const res = await request(app).get('/api/tareas/123');
+    
+    expect(res.statusCode).toBe(500); 
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toMatch();
   });
 });
