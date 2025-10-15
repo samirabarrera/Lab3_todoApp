@@ -31,24 +31,24 @@ describe('🎓 EJERCICIOS PARA ESTUDIANTES', () => {
     // 3. Verificar respuesta y BD
   const tarea = await Tarea.create({ title: 'Tarea original' });
   const res = await request(app)
-   .put(`/api/tareas/${tarea._id}`)
+  .put(`/api/tareas/${tarea._id}`)
   .send({ title: 'Tarea actualizada', completed: true });
     
     // TODO: Agregar expects aquí
-  expect(true).toBe(true); // Placeholder - ¡reemplazar!
+    expect(res.statusCode).toBe(200);
+    expect(res.body.title).toBe('Tarea actualizada');
   });
 
   // EJERCICIO 2: Completar esta prueba
   test('TODO: Implementar DELETE /api/tareas/:id - eliminar tarea', async () => {
     // PISTA:
     // 1. Crear una tarea
+    const tarea = await Tarea.create({title: 'Tarea para eliminar'})
     // 2. Hacer DELETE
+    const res = await request(app).delete(`/api/tareas/${tarea._id}`)
     // 3. Verificar que se eliminó (404 en GET)
-  /*const borrarTarea = await borrarTarea.delete({ title: 'Borrar Tarea'});
-  const res = await request(app)
-  .delete(`api/tareas/${tarea._id}`)
-  .send({ title: 'Tarea borrada', completed: true });*/
-    expect(true).toBe(true); // Placeholder - ¡reemplazar!
+    const getRes = await request(app).get(`/api/tareas/${tarea._id}`);
+    expect(getRes.statusCode).toBe(404);
   });
 
   // EJERCICIO 3: Prueba de validación
