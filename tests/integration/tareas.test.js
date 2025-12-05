@@ -108,4 +108,30 @@ describe('EJEMPLOS PRACTICOS DE PRUEBAS DE INTEGRACION', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual([])
   });
+
+  // EJERCICIO 7: Implementar la prueba para actualizar una tarea
+  test('PUT /api/tareas/:id actualiza una tarea existente', async () => {
+    // 1. Crear tarea
+    const tarea = await Tarea.create({ title: 'Titulo Viejo' });
+    
+    // 2. Actualizarla
+    const res = await request(app)
+      .put(`/api/tareas/${tarea._id}`)
+      .send({ title: 'Titulo Nuevo', completed: true });
+
+    // 3. Verificar
+    expect(res.statusCode).toBe(200);
+    expect(res.body.title).toBe('Titulo Nuevo');
+    expect(res.body.completed).toBe(true);
+  });
+
+  test('PUT /api/tareas/:id devuelve 404 si la tarea a actualizar no existe', async () => {
+    const idInvalido = new mongoose.Types.ObjectId();
+    
+    const res = await request(app)
+      .put(`/api/tareas/${idInvalido}`)
+      .send({ title: 'No importa' });
+
+    expect(res.statusCode).toBe(404);
+  });
 });
