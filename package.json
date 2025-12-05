@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest --detectOpenHandles --forceExit",
+    "test": "jest --coverage --detectOpenHandles --forceExit --testTimeout=10000",
     "test:watch": "jest --watch --detectOpenHandles --forceExit",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
